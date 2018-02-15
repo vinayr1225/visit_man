@@ -1,0 +1,14 @@
+label{
+  font-size: 10px;
+  font-family:Arial;
+  color: darkgray;
+  background-color: #343a40;
+  padding: 0;
+  margin: 0;
+}
+
+div{
+  background-color: #343a40;
+  padding: 5px;
+  margin: 0;
+}

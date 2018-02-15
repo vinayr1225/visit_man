@@ -1,17 +1,15 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-// import { DatePipe } from '@angular/common';
-
-
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './/app-routing.module';
 import {ScheduleService} from './schedule/schedule.service';
 import {LoginService} from './login/login.service';
-
+import {PendingService} from './pending/pending.service';
+import {ArrivedService} from './arrived/arrived.service';
+import {HistoryService} from './history/history.service';
 
 import {FormsModule, NgForm} from '@angular/forms';
-
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
@@ -31,6 +29,10 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import { BodyComponent } from './body/body.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { ScheduleFilterPipe } from './schedule/schedule-filter.pipe';
+import { PendingFilterPipe } from './pending/pending-filter.pipe';
+import { ArrivedFilterPipe } from './arrived/arrived-filter.pipe';
+import { HistoryFilterPipe } from './history/history-filter.pipe';
 
 
 
@@ -45,6 +47,10 @@ import { FooterComponent } from './footer/footer.component';
     BodyComponent,
     HeaderComponent,
     FooterComponent,
+    ScheduleFilterPipe,
+    PendingFilterPipe,
+    ArrivedFilterPipe,
+    HistoryFilterPipe,
 
 
 
@@ -60,7 +66,14 @@ import { FooterComponent } from './footer/footer.component';
 
 
   ],
-  providers: [ScheduleService, LoginService],
+  providers: [
+    ScheduleService,
+    LoginService,
+    PendingService,
+    ArrivedService,
+    HistoryService
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

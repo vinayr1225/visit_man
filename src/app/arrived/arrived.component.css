@@ -1,0 +1,24 @@
+.table-fixed tbody {
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+  font-size: 13px;
+
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+}
+
+.btnCell{
+  height: 19px;
+  padding-left: 10px;
+}

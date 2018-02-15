@@ -4,7 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {VisitorInfo} from '../model/visitor-info';
 import {VisitorSchedule} from '../model/visitor-schedule';
 import {catchError, tap} from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import {of} from 'rxjs/observable/of';
+import {LoginService} from '../login/login.service';
 
 
 const httpOptions = {
@@ -16,16 +17,30 @@ const httpOptions = {
 export class ScheduleService {
 
 
-  baseUrl = 'http://localhost:8080/dil/schedule';
-  pendingListUrl = 'http://localhost:8080/dil/schedule/pending-list';
+  //
+  // baseUrl = 'http://localhost:8080/?username=${this.username}/schedule/';
+  // pendingListUrl = 'http://localhost:8080/${this.username}/schedule/pending-list';
 
+  baseUrl: string;
+  pendingListUrl: string;
 
-  constructor(private http: HttpClient) {
+  loginService: LoginService;
+  username: String;
+
+  constructor(private http: HttpClient,
+              loginService: LoginService) {
+    this.loginService = loginService;
+
+    if (loginService.isAuth === true) {
+      this.username = loginService.username;
+    }
+
+    this.baseUrl = 'http://localhost:8080/' + this.username + '/schedule/';
+    this.pendingListUrl = 'http://localhost:8080/' + this.username + '/schedule/pending-list';
   }
 
   findPendingList(): Observable<VisitorSchedule[]> {
-    return this.http.get<VisitorSchedule[]>(this.pendingListUrl)
-      .pipe(tap(pendingList => console.log(pendingList)));
+    return this.http.get<VisitorSchedule[]>(this.pendingListUrl);
   }
 
   saveSchedule(visitorSchedule: VisitorSchedule): Observable<VisitorSchedule> {
@@ -37,22 +52,21 @@ export class ScheduleService {
     return this.http.post<{}>(urlWithPram, visitorSchedule, httpOptions);
   }
 
-  findVisitorInfoes(id: String): Observable<VisitorInfo> {
-    if (!id.trim()) {
-      // if not search term, return empty hero array.
-      return of(null);
+  findVisitorInfo(id: String): Observable<VisitorInfo> {
+    if (id === '') {
+      return of(undefined);
     }
-    return this.http.get<VisitorInfo>(`${this.baseUrl}/?id=${id}`).pipe(
-      tap(visitor => console.log('found visitor ' + visitor)),
-      catchError(this.handleError<VisitorInfo>(null))
-    );
+    const updUrl = `${this.baseUrl}/?id=${id}`;
+    return this.http.get<VisitorInfo>(updUrl)
+      .pipe(
+        catchError(this.handleError<VisitorInfo>(null))
+      );
   }
 
-  private handleError<T> (result?: T) {
+
+  private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
 
 
       // Let the app keep running by returning an empty result.

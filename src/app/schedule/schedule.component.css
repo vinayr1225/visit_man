@@ -1,0 +1,40 @@
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+form{
+  padding-top: 80px;
+}
+
+.table-fixed tbody {
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+
+
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+  font-size: 12px;
+
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+
+}
+
+.btnCell{
+  height: 19px;
+  padding-left: 10px;
+}
+
+

@@ -1,70 +1,63 @@
-<div class="container">
-  <!--<div class="col-6">-->
-    <div class="float-right">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search for" aria-label="search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">SEARCH</button>
+<div class="container-fluid">
+  <div class="float-right">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search for ID or NAME" aria-label="search"
+             aria-describedby="basic-addon2" [(ngModel)]="searchIdName">
+    </div>
+  </div>
+  <table class="table-hover table table-fixed table-bordered">
+    <thead class="thead-dark">
+    <tr class="text-center">
+      <th class="col-1" scope="col">ID</th>
+      <th class="col-2" scope="col">NAME</th>
+      <th class="col-2" scope="col">ORGANIZATION</th>
+      <th class="col-2" scope="col">PURPOSE</th>
+      <th class="col-2" scope="col">TO MEET</th>
+      <th class="col-1" scope="col">MOBILE</th>
+      <th class="col-1" scope="col">FLOOR</th>
+      <th class="col-1" scope="col">#</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor=" let schedule of pendingList | pendingFilter : searchIdName">
+      <td class="col-1">{{schedule.visitorInfo.visitorId}}</td>
+      <td class="col-2">{{schedule.visitorInfo.name}}</td>
+      <td class="col-2">{{schedule.visitorInfo.organization}}</td>
+      <td class="col-2">{{schedule.purpose}}</td>
+      <td class="col-2">{{schedule.employee.fullname}}</td>
+      <td class="col-1">{{schedule.employee.mobileNumber}}</td>
+      <td class="col-1">{{schedule.employee.floor}}</td>
+      <td class="col-1">
+        <button (click)="selectVisitorSchedule(schedule)" type="button" class="close  btnCell" aria-label="Close"
+                data-toggle="modal" data-target="#MarkAsArrived">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="modal fade" id="MarkAsArrived" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h4 class="text-center"><b>VISITOR ID</b> :{{this.currentVisitorSchedule.visitorInfo.visitorId}}v</h4>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">PASS NO</span>
+            </div>
+            <input [ngModel]="passno" #passNoInput="ngModel" required type="number" class="form-control"
+                   placeholder="Enter Pass No" aria-label="passNo"
+                   aria-describedby="passNo">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button (click)="markAsArrived(this.currentVisitorSchedule ,passNoInput)" data-dismiss="modal"
+                  [disabled]="passNoInput.invalid" type="submit" class="btn btn-primary">Arrived
+          </button>
         </div>
       </div>
     </div>
-    <table class="table">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">NAME</th>
-        <th scope="col">ORGANIZATION</th>
-        <th scope="col">PURPOSE</th>
-        <th scope="col">TO MEET</th>
-        <th scope="col">MOBILE</th>
-        <th scope="col">FLOOR</th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>
-          <button type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>@fat</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>
-          <button type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-        <td>@twitter</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-        <td>
-          <button type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  <!--</div>-->
+  </div>
 </div>

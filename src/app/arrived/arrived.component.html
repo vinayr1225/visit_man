@@ -1,79 +1,63 @@
-<div class="container">
+<div class="container-fluid">
   <!--<div class="col-6">-->
   <div class="float-right">
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Search for" aria-label="search" aria-describedby="basic-addon2">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">SEARCH</button>
-      </div>
+      <input type="text" class="form-control" placeholder="Search for ID or NAME"
+             aria-label="search" aria-describedby="basic-addon2" [(ngModel)]="searchIdName">
+
     </div>
   </div>
-  <table class="table">
+  <table class="table table-hover table-fixed table-bordered" >
     <thead class="thead-dark">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">NAME</th>
-      <th scope="col">ORGANIZATION</th>
-      <th scope="col">PURPOSE</th>
-      <th scope="col">TO MEET</th>
-      <th scope="col">MOBILE</th>
-      <th scope="col">FLOOR</th>
-      <th scope="col">TIME</th>
-      <th scope="col">PASS NO</th>
-
-      <th scope="col"></th>
+    <tr class="text-center">
+      <th class="col-1" scope="col">ID</th>
+      <th class="col-1" scope="col">NAME</th>
+      <th class="col-1" scope="col">ORGANIZATION</th>
+      <th class="col-2" scope="col">PURPOSE</th>
+      <th class="col-2" scope="col">TO MEET</th>
+      <th class="col-1" scope="col">MOBILE</th>
+      <th class="col-1" scope="col">FLOOR</th>
+      <th class="col-1" scope="col">TIME</th>
+      <th class="col-1" scope="col">PASS NO</th>
+      <th class="col-1" scope="col">Leave</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>
-        <button type="button" class="close" aria-label="Close">
+    <tr *ngFor="let history of arrivedList | arrivedFilter : searchIdName">
+      <td class="col-1 text-center">{{history.visitorSchedule.visitorInfo.visitorId}}</td>
+      <td class="col-1">{{history.visitorSchedule.visitorInfo.name}}</td>
+      <td class="col-1">{{history.visitorSchedule.visitorInfo.organization}}</td>
+      <td class="col-2">{{history.visitorSchedule.purpose}}</td>
+      <td class="col-2">{{history.visitorSchedule.employee.fullname}}</td>
+      <td class="col-1 text-center">{{history.visitorSchedule.employee.mobileNumber}}</td>
+      <td class="col-1 text-center">{{history.visitorSchedule.employee.floor}}</td>
+      <td class="col-1 text-center">{{history.visitorHistoryId.arrivedDateTime | date:'hh:mm:ss'}}</td>
+      <td class="col-1 text-center">{{history.passno}}</td>
+      <td class="col-1">
+        <button (click)="selectVisitorHistory(history)" type="button" class="close btnCell" aria-label="Close" data-toggle="modal" data-target="#markAsLeaved">
           <span aria-hidden="true">&times;</span>
         </button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@fat</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>
-        <button type="button" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@twitter</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>
-        <button type="button" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+
       </td>
     </tr>
     </tbody>
   </table>
-  <!--</div>-->
+  <div class="modal fade" id="markAsLeaved" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h4><b>VISITOR ID</b> : {{this.currentVisitorHistory.visitorSchedule.visitorInfo.visitorId}}v</h4>
+          <h4><b>PASS NO</b> : {{this.currentVisitorHistory.passno}}</h4>
+          <h6><b>ARRIVED TIME</b> : {{this.currentVisitorHistory.visitorHistoryId.arrivedDateTime | date:'h:mm a'}}</h6>
+
+        </div>
+        <div class="modal-footer">
+          <button (click)="markAsLeaved(this.currentVisitorHistory.visitorHistoryId)" data-dismiss="modal"
+                  type="submit" class="btn btn-primary">LEAVE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

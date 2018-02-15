@@ -1,23 +1,23 @@
 export class Employee {
-  public usename: String;
+  public username: String;
   public password: String;
   public privilageLvl: String;
-  public fullName: String;
+  public fullname: String;
   public section: String;
   public floor: number;
   public mobileNumber: String;
 
-  constructor(usename: String,
+  constructor(username: String,
               password: String,
               privilageLvl: String,
-              fullName: String,
+              fullname: String,
               section: String,
               floor: number,
               mobileNumber: String) {
-    this.usename = usename;
+    this.username = username;
     this.password = password;
     this.privilageLvl = privilageLvl;
-    this.fullName = fullName;
+    this.fullname = fullname;
     this.section = section;
     this.floor = floor;
     this.mobileNumber = mobileNumber;

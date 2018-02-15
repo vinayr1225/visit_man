@@ -5,83 +5,85 @@
         <label for="visitorId" class="col-3 col-form-label">ID</label>
         <div class="col-9">
           <div class="input-group mb-3">
-            <input #searchBox id="search-box" (keyup)="search(searchBox.value)" [ngModel]="visitorId" name="visitorId" type="number" class="form-control" id="visitorId" placeholder="*********">
-
+            <input required #VisitoridInput="ngModel"
+                   [(ngModel)]="visitorId" name="visitorId" type="number"
+                   class="form-control" id="visitorId" placeholder="*********">
             <span class="input-group-append">
               <span class="input-group-text" id="basic-addon2">v</span>
             </span>
-
-            <!--<input #searchBox id="search-box" (keyup)="search(searchBox.value)" [ngModel]="visitorId" name="visitorId" type="number" class="form-control" id="visitorId" placeholder="*********">-->
-
           </div>
         </div>
       </div>
       <div class="form-group row">
         <label for="visitorName" class="col-3 col-form-label">NAME</label>
         <div class="col-9">
-          <input [ngModel]="name" name="name" type="text" class="form-control" id="visitorName"
+          <input required #visitorNameInput="ngModel" [(ngModel)]="name" name="name" type="text" class="form-control"
+                 id="visitorName"
                  placeholder="visitor name">
         </div>
       </div>
       <div class="form-group row">
         <label for="visitorName" class="col-3 col-form-label">ORGANIZATION</label>
         <div class="col-9">
-          <input [ngModel]="organization" name="organization" type="text" class="form-control" id="visitorOrganization"
+          <input required #organizationInput [(ngModel)]="organization" name="organization" type="text"
+                 class="form-control"
+                 id="visitorOrganization"
                  placeholder="organization">
         </div>
       </div>
       <div class="form-group row">
         <label for="purpose" class="col-3 col-form-label">PURPOSE</label>
         <div class="col-9">
-          <textarea [ngModel]="purpose" name="purpose" type="text" class="form-control" id="purpose"
+          <textarea required #purposeInput="ngModel" [(ngModel)]="purpose" name="purpose" type="text"
+                    class="form-control" id="purpose"
                     placeholder="purpose"></textarea>
         </div>
       </div>
       <div class="form-group row">
         <label for="scheduleDate" class="col-3 col-form-label">SCHEDULED DATE</label>
         <div class="col-9">
-          <input type="text" class="form-control" placeholder="Daterangepicker" bsDaterangepicker
-                 [(ngModel)]="daterangepickerModel" name="scheduleDate" id="scheduleDate"/>
+          <input required #scheduleDateInput type="text" class="form-control" placeholder="scheduled date"
+                 bsDaterangepicker
+                 [(ngModel)]="daterangepickerModel" placement="top"  [bsConfig]="datePickerConfig" [max]="maxDate" [min]="minDate"  name="scheduleDate" id="scheduleDate"/>
         </div>
       </div>
       <div class="float-right">
-        <button type="submit" class="btn btn-success">CREATE</button>
-        <button type="button" class="btn btn-primary">CANCEL</button>
+        <button  [disabled]="scheduleForm.invalid" type="submit" class="btn btn-success">CREATE</button>
+
       </div>
+
     </form>
+
   </div>
   <div class="col-6">
     <div class="float-right">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search for" aria-label="search"
-               aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">SEARCH</button>
-        </div>
+        <input type="text" class="form-control" placeholder="Search for ID or NAME" aria-label="search"
+               aria-describedby="basic-addon2" [(ngModel)]="searchIdName">
       </div>
     </div>
-    <table class="table">
-      <thead class="thead-dark">
+    <table class="table table-fixed table-bordered">
+      <thead class="thead-dark text-center">
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">NAME</th>
-        <th scope="col">ORGANIZATION</th>
-        <th scope="col">PURPOSE</th>
-        <th scope="col">SCHEDULE</th>
-        <th scope="col"></th>
+        <th class="col-2" scope="col">ID</th>
+        <th class="col-2" scope="col">NAME</th>
+        <th class="col-2" style="font-stretch: ultra-condensed" scope="col">ORGANIZATION</th>
+        <th class="col-3" scope="col">PURPOSE</th>
+        <th class="col-2" scope="col">SCHEDULE</th>
+        <th class="col-1" scope="col">#</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let schedule of pendingList">
-        <td>{{schedule.visitorInfo.visitorId}}</td>
-        <td>{{schedule.visitorInfo.name}}</td>
-        <td>{{schedule.visitorInfo.organization}}</td>
-        <td>{{schedule.purpose}}</td>
-        <td>{{schedule.visitorScheduleId.scheduleStartDate | date:'MMM d'}} -
+      <tr *ngFor="let schedule of pendingList | scheduleFilter : searchIdName">
+        <td class="col-2 text-center">{{schedule.visitorInfo.visitorId}}</td>
+        <td class="col-2">{{schedule.visitorInfo.name | uppercase}}</td>
+        <td class="col-2">{{schedule.visitorInfo.organization | uppercase}}</td>
+        <td class="col-3">{{schedule.purpose}}</td>
+        <td class="col-2 text-center">{{schedule.visitorScheduleId.scheduleStartDate | date:'MMM d'}} -
           {{schedule.scheduleEndDate | date:'MMM d'}}
         </td>
-        <td>
-          <button (click)="removeSchedule(schedule)" type="button" class="close" aria-label="Close">
+        <td class="col-1">
+          <button (click)="removeSchedule(schedule)" type="button" class="close btnCell" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </td>

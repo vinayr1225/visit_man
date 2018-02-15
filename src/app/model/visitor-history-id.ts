@@ -2,11 +2,11 @@ import {VisitorScheduleId} from './visitor-schedule-id';
 
 export class VisitorHistoryId {
 
-  public arrivedDateTime: Date;
+  public arrivedDateTime: number;
 
   public visitorScheduleId: VisitorScheduleId;
 
-  constructor(arrivedDateTime: Date,
+  constructor(arrivedDateTime: number,
               visitorScheduleId: VisitorScheduleId) {
 
     this.arrivedDateTime = arrivedDateTime;

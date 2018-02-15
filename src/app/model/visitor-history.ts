@@ -7,10 +7,7 @@ export class VisitorHistory {
   public passno: number;
 
   public visitorHistoryId: VisitorHistoryId;
-
   public visitorSchedule: VisitorSchedule;
-
-
   constructor(leavingDateTime: Date,
               passno: number,
               visitorHistoryId: VisitorHistoryId,

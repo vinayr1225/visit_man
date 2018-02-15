@@ -1,0 +1,28 @@
+body{
+  background-color: #343a40;
+}
+
+.mainView{
+  position: relative;
+  left: 0;
+  top: 60px;
+  width: 100%;
+
+
+}
+
+.jumbotron{
+  position: relative;
+  border-bottom: 0;
+  padding-bottom: 0;
+  height: 525px;
+  padding-top: 20px;
+}
+
+.mobitel:hover{
+  color: cornflowerblue;
+}
+
+.mobitel{
+  color: lightsteelblue;
+}
